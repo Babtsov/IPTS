@@ -1,0 +1,7 @@
+#!/usr/bin/expect 
+spawn lxc-console -n sipmedia
+expect "mediasip login:"
+send "root\n"
+send "touch mediasip.txt\n"
+#interact
+
