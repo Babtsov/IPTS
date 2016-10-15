@@ -13,14 +13,15 @@ cp host_config/lxc.conf /etc/lxc/lxc.conf
 echo 0 > /proc/sys/kernel/grsecurity/chroot_caps 
 echo 0 > /proc/sys/kernel/grsecurity/chroot_deny_chroot
 
-echo "Creating containers..."
+echo "Creating and configuring the sip container..."
 lxc-create -n sip -f /etc/lxc/lxc.conf -t alpine
-lxc-create -n sipmedia -f /etc/lxc/lxc.conf -t alpine
 lxc-start --name sip
-lxc-start --name sipmedia
 
-echo "configuring sip container..."
 cp -r sip_config /var/lib/lxc/sip/rootfs/tmp/
 lxc-attach -n sip -- /tmp/sip_config/config.sh
+lxc-stop -n sip
+lxc-start --name sip
 echo "configuring sipmedia container..."
+lxc-create -n sipmedia -f /etc/lxc/lxc.conf -t alpine
+lxc-start --name sipmedia
 echo "DONE with IPTS INSTALL"
