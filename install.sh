@@ -2,8 +2,11 @@ echo "Installing dependencies..."
 apk add lxc lxc-templates bridge
 echo "Preparing network on the host..."
 cp host_config/interfaces /etc/network/interfaces
+# restart network
+ifconfig eth0 down
+ifconfig eth0 up
+
 cp host_config/lxc.conf /etc/lxc/lxc.conf
-/etc/init.d/networking restart
 
 # workaround to ensure we can use lxc-attach
 # see https://wiki.alpinelinux.org/wiki/Talk:LXC
