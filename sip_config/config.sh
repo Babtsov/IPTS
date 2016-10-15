@@ -1,3 +1,4 @@
+#!/bin/sh
 touch /root/qaz.txt
 mv /tmp/network_interfaces /etc/network/interfaces
 /etc/init.d/networking start
