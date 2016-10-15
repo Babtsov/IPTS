@@ -1,12 +1,8 @@
 echo "Installing dependencies..."
-apk add lxc lxc-templates bridge
-echo "Preparing network on the host..."
-cp host_config/interfaces /etc/network/interfaces
-# restart network
-ifconfig eth0 down
-ifconfig eth0 up
+apk add lxc lxc-templates
 
 cp host_config/lxc.conf /etc/lxc/lxc.conf
+/etc/init.d/networking restart
 
 # workaround to ensure we can use lxc-attach
 # see https://wiki.alpinelinux.org/wiki/Talk:LXC
@@ -18,9 +14,9 @@ lxc-create -n sip -f /etc/lxc/lxc.conf -t alpine
 lxc-start --name sip
 
 cp -r sip_config /var/lib/lxc/sip/rootfs/tmp/
+echo "executing config.sh inside sip..."
 lxc-attach -n sip -- /tmp/sip_config/config.sh
-lxc-stop -n sip
-lxc-start --name sip
+echo "done with config.sh inside sip"
 echo "configuring sipmedia container..."
 lxc-create -n sipmedia -f /etc/lxc/lxc.conf -t alpine
 lxc-start --name sipmedia
