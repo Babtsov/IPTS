@@ -1,10 +1,12 @@
 echo "Installing dependencies..."
 apk add lxc lxc-templates
 
+echo "Transferring lxc configuration files..."
 cp host_config/lxc.conf /etc/lxc/lxc.conf
-echo "contents of transferred lxc.conf"
-cat /etc/lxc/lxc.conf
+cat /host_config/lxc.comf
+echo "Restarting network service..."
 /etc/init.d/networking restart
+echo "Network service restarted."
 
 # workaround to ensure we can use lxc-attach
 # see https://wiki.alpinelinux.org/wiki/Talk:LXC
