@@ -2,11 +2,13 @@ echo "Installing dependencies..."
 apk add lxc lxc-templates
 
 cp host_config/lxc.conf /etc/lxc/lxc.conf
+echo "contents of transferred lxc.conf"
+cat /etc/lxc/lxc.conf
 /etc/init.d/networking restart
 
 # workaround to ensure we can use lxc-attach
 # see https://wiki.alpinelinux.org/wiki/Talk:LXC
-echo 0 > /proc/sys/kernel/grsecurity/chroot_caps 
+echo 0 > /proc/sys/kernel/grsecurity/chroot_caps
 echo 0 > /proc/sys/kernel/grsecurity/chroot_deny_chroot
 
 echo "Creating and configuring the sip container..."
