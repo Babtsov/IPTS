@@ -50,6 +50,10 @@ lxc-stop --name sip
 lxc-stop --name sipmedia
 lxc-start --name sip
 lxc-start --name sipmedia
-echo "restarting network again for some reason"
-service networking restart
-echo "done configuring"
+
+echo "done configuring."
+echo "saving snapshot of current system..."
+lbu ci
+echo "rebooting..."
+sleep 5
+reboot
