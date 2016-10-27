@@ -6,8 +6,8 @@ iface eth0 inet manual
 
 auto br0
 iface br0 inet static
-	address 10.2.0.253
+	address 192.168.1.250
 	netmask 255.255.255.0
-	gateway 10.2.0.1
+	gateway 192.168.1.1
         bridge_ports eth0
         bridge_stp 0
