@@ -1,4 +1,4 @@
-echo "restarting networking"
+echo "updating network settings"
 rm /etc/network/interfaces
 touch /etc/network/interfaces
 cp host_config/interfaces /etc/network/interfaces
@@ -50,5 +50,6 @@ lxc-stop --name sip
 lxc-stop --name sipmedia
 lxc-start --name sip
 lxc-start --name sipmedia
-
+echo "restarting network again for some reason"
+service networking restart
 echo "done configuring"
