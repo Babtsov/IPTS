@@ -20,11 +20,11 @@ echo "creating lxc configuration..."
 cp host_config/lxc.conf /etc/lxc/lxc.conf
 service networking restart
 
-echo "creating sip container..."
-echo 0 > /proc/sys/kernel/grsecurity/chroot_caps
-echo 0 > /proc/sys/kernel/grsecurity/chroot_deny_chroot
+echo "Creating sip container..."
 lxc-create -n sip -f /etc/lxc/lxc.conf -t alpine
 echo "Sip Container Created"
+
+echo "Creating sipmedia container..."
 lxc-create -n sipmedia -f /etc/lxc/lxc.conf -t alpine
 echo "Sip Media Container Created"
 
@@ -33,27 +33,24 @@ lbu include /var/lib/lxc
 
 echo "Starting sip container..."
 lxc-start --name sip
+
 echo "Starting sip media container..."
 lxc-start --name sipmedia
 
-cp -r sip_config /var/lib/lxc/sip/rootfs/tmp/
-cp -r sip_config /var/lib/lxc/sipmedia/rootfs/tmp/
+echo "Creating sip network interface"
+cp -r sip_config/sip_network_interfaces  /var/lib/lxc/sip/rootfs/etc/network/interfaces
+
+echo "Creating sipmedia network interface"
+cp -r sip_config/sipmedia_network_interfaces /var/lib/lxc/sipmedia/rootfs/etc/network/interfaces
 
 echo "executing sip_config inside containers..."
-lxc-attach -n sip -- /tmp/sip_config/config.sh
-lxc-attach -n sipmedia  -- /tmp/sip_config/config.sh
-lxc-attach -n sip -- rc-update add networking
-lxc-attach -n sipmedia -- rc-update add networking
+echo 0 > /proc/sys/kernel/grsecurity/chroot_caps
+echo 0 > /proc/sys/kernel/grsecurity/chroot_deny_chroot
+#lxc-attach -n sip -- /tmp/sip_config/config.sh
+#lxc-attach -n sipmedia  -- /tmp/sip_config/config.sh
+#lxc-attach -n sip -- rc-update add networking
+#lxc-attach -n sipmedia -- rc-update add networking
 
-echo "restarting containers..."
-lxc-stop --name sip
-lxc-stop --name sipmedia
-lxc-start --name sip
-lxc-start --name sipmedia
+echo "***** ***** ***** *****"
+echo "DEPLOYMENT IS DONE"
 
-echo "done configuring."
-echo "saving snapshot of current system..."
-lbu ci
-echo "rebooting..."
-sleep 5
-reboot
