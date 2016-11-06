@@ -4,5 +4,5 @@ This repository contains scripts that try to configure the IPTS system automatic
 * Run the following:
 ```bash
 cd /media/usb/IPTS
-./install.sh
+./init.sh
 ```
