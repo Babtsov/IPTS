@@ -1,3 +1,10 @@
+# keep pressing enter to setup a default temporary networking interface (using dhcp)
+printf "\n" | ./setup-interfaces
+# restart the networking to activate internet
+/etc/init.d/networking restart
+# configure the `apk` tool to an endpoint where it will fetch Alpine Linux packages
+echo 1 | ./setup-apkrepos > /dev/null
+
 echo "updating network settings"
 rm /etc/network/interfaces
 touch /etc/network/interfaces
@@ -7,11 +14,8 @@ service networking restart
 echo "updating & upgrading APK"
 apk update && apk upgrade
 
-echo "adding git"
-apk add git
-
-echo "adding bash, bridge, and vim"
-apk add bash bridge vim
+echo "adding git, bridge, bash, and vim"
+apk add git bridge bash vim
 
 echo "adding lxc dependencies..."
 apk add lxc lxc-templates
