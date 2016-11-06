@@ -44,17 +44,18 @@ cp -r sip_config /var/lib/lxc/sip/rootfs/tmp/
 cp -r sip_config /var/lib/lxc/sipmedia/rootfs/tmp/
 
 echo "executing sip_config inside containers..."
-lxc-attach -n sip -- /tmp/sip_config/config.sh
-lxc-attach -n sipmedia  -- /tmp/sip_config/config.sh
+lxc-attach -n sip -- /tmp/sip_config/sip_config.sh
+lxc-attach -n sipmedia  -- /tmp/sip_config/sipmedia_config.sh
 lxc-attach -n sip -- rc-update add networking
 lxc-attach -n sipmedia -- rc-update add networking
 
+sleep 10
 echo "restarting containers..."
 lxc-stop --name sip
 lxc-stop --name sipmedia
 lxc-start --name sip
 lxc-start --name sipmedia
-
+sleep 10
 echo "CONFIGURATION DONE"
 echo "Creating Reboot Flag"
 touch /etc/rebootFlag.txt
@@ -62,4 +63,3 @@ echo "saving snapshot of current system..."
 lbu ci
 echo "rebooting..."
 sleep 5
-reboot
