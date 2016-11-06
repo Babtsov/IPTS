@@ -1,7 +1,0 @@
-#!/usr/bin/expect 
-spawn lxc-console -n sip
-expect "sip login:"
-send "root\n"
-send "touch sip.txt\n"
-# interact
-
