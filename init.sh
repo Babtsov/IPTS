@@ -55,7 +55,9 @@ lxc-stop --name sipmedia
 lxc-start --name sip
 lxc-start --name sipmedia
 
-echo "done configuring."
+echo "CONFIGURATION DONE"
+echo "Creating Reboot Flag"
+touch /etc/rebootFlag.txt
 echo "saving snapshot of current system..."
 lbu ci
 echo "rebooting..."
