@@ -15,7 +15,6 @@ apk add lxc lxc-templates                                        #add LXC depend
 lbu include /var/lib/lxc                                         #configuring containers for LBU backup
 cp host_config/lxc.conf /etc/lxc/lxc.conf                        #copy container configuration from usb to host
 
-
 echo "creating containers"
 lxc-create -n sip -f /etc/lxc/lxc.conf -t alpine                 #create sip container
 lxc-create -n sipmedia -f /etc/lxc/lxc.conf -t alpine            #create sipmedia container
