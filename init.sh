@@ -35,27 +35,34 @@ echo 0 > /proc/sys/kernel/grsecurity/chroot_deny_chroot
 
 echo "starting sip container..."
 lxc-start --name sip
-echo "configuring networking inside sip"
 cp -r sip_config /var/lib/lxc/sip/rootfs/tmp/
-lxc-attach -n sip -- /tmp/sip_config/sip_config.sh
-echo "restarting networking inside sip"
-lxc-attach -e -n sip -- rc-update add networking
 
 echo "Starting sip media container..."
 lxc-start --name sipmedia
-echo "configuring networking inside sipmedia"
 cp -r sip_config /var/lib/lxc/sipmedia/rootfs/tmp/
-lxc-attach -n sipmedia  -- /tmp/sip_config/sipmedia_config.sh
-echo "restarting networking inside sipmedia"
-lxc-attach -e -n sipmedia -- rc-update add networking
 
+echo "executing sip_config inside containers..."
+lxc-attach -n sip -- /tmp/sip_config/sip_config.sh
+lxc-attach -n sipmedia  -- /tmp/sip_config/sipmedia_config.sh
+lxc-attach -n sip -- rc-update add networking
+lxc-attach -n sipmedia -- rc-update add networking
+
+
+sleep 10
 echo "restarting containers..."
 lxc-stop --name sip
 lxc-stop --name sipmedia
 lxc-start --name sip
 lxc-start --name sipmedia
-
+sleep 10
 echo "CONFIGURATION DONE"
 echo "Configuring system to fasciliate debugging..."
-./release.sh 		# make USB writeable 
+./release.sh 		# make USB writeable
 apk add git bash vim	# add git bash and vim
+
+echo "Creating Reboot Flag"
+touch /etc/rebootFlag.txt
+echo "saving snapshot of current system..."
+lbu ci
+echo "rebooting..."
+sleep 5
