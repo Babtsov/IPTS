@@ -5,7 +5,6 @@ touch /etc/network/interfaces
 cp /root/sip_config/sip_network_interfaces /etc/network/interfaces
 service networking restart
 
-echo "updating & upgrading apk, see https://bugs.alpinelinux.org/issues/3104"
 apk update && apk upgrade
 
 echo 'CONFIGURE Kamailio Installation'
@@ -36,6 +35,8 @@ sed '/^[# ]*DBROOTUSER/cDBROOTUSER="postgres" ' -i /etc/kamailio/kamctlrc
 sed '/^[# ]*OSER_FIFO/cOSER_FIFO="/tmp/kamailio/kamailio_fifo" ' -i /etc/kamailio/kamctlrc
 
 echo 'CREATE Kamailio database'
+# workaround weird alpine bug, see https://bugs.alpinelinux.org/issues/3104"
+cp /root/sip_config/kamdbctl.base /usr/lib/kamailio/kamctl/kamdbctl.base
 echo postgres > /root/.pgpass 
 chmod 600 /root/.pgpass 
 yes|kamdbctl create openser
