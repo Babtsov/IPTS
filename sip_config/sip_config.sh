@@ -5,6 +5,9 @@ touch /etc/network/interfaces
 cp /root/sip_config/sip_network_interfaces /etc/network/interfaces
 service networking restart
 
+echo "updating & upgrading apk, see https://bugs.alpinelinux.org/issues/3104"
+apk update && apk upgrade
+
 echo 'CONFIGURE Kamailio Installation'
 apk add acf-postgresql
 /etc/init.d/postgresql setup
