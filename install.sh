@@ -53,8 +53,12 @@ cp -r provisioning_config /var/lib/lxc/provisioning/rootfs/root/
 
 # ------------- debugging config ------------
 echo "Configuring system to fasciliate debugging..."
-./release.sh 			# make USB writeable 
+./release.sh 			# make USB writeable
 apk add git bash vim	# add git bash and vim
+
+
+# ------------- ssh config ------------
+./serverSSH.sh
 
 echo "CONFIGURATION DONE"
 echo "Use lxc-console to configure each container individually"
