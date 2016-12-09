@@ -2,7 +2,8 @@
 echo 'CONFIGURING NETWORK'
 rm /etc/network/interfaces
 touch /etc/network/interfaces
-cp /root/sip_config/sip_network_interfaces /etc/network/interfaces
+#cp /root/sip_config/sip_network_interfaces /etc/network/interfaces
+cp /root/sip_config/denzel_sip_network_interfaces /etc/network/interfaces
 service networking restart
 
 apk update && apk upgrade
@@ -37,12 +38,12 @@ sed '/^[# ]*OSER_FIFO/cOSER_FIFO="/tmp/kamailio/kamailio_fifo" ' -i /etc/kamaili
 echo 'CREATE Kamailio database'
 # workaround weird alpine bug, see https://bugs.alpinelinux.org/issues/3104"
 cp /root/sip_config/kamdbctl.base /usr/lib/kamailio/kamctl/kamdbctl.base
-echo postgres > /root/.pgpass 
-chmod 600 /root/.pgpass 
+echo postgres > /root/.pgpass
+chmod 600 /root/.pgpass
 yes|kamdbctl create openser
 
 # Start Kamailio and setup for auto start on reboot
-rc-update add kamailio 
+rc-update add kamailio
 echo 'rc_after=postgresql' >> /etc/conf.d/kamailio
 
 # Create the directory for pid file:

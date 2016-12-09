@@ -1,7 +1,8 @@
 #!/bin/sh
 rm /etc/network/interfaces
 touch /etc/network/interfaces
-cp /root/sipmedia_config/sipmedia_network_interfaces /etc/network/interfaces
+#cp /root/sipmedia_config/sipmedia_network_interfaces /etc/network/interfaces
+cp /root/sipmedia_config/denzel_sipmedia_network_interfaces /etc/network/interfaces
 service networking restart
 
 #install all dependencies
@@ -11,7 +12,7 @@ apk add freeswitch freeswitch-sounds-en-us-callie-8000 freeswitch-flite acf-free
 lbu include var/lib/freeswitch
 lbu include usr/sounds
 
-#to get voicemail to work 
+#to get voicemail to work
 mkdir /usr/storage
 chown freeswitch:freeswitch /usr/storage
 cp -avr /usr/share/freeswitch/sounds /usr/
