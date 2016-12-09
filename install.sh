@@ -7,7 +7,7 @@ echo 1 | ./setup-apkrepos > /dev/null
 
 echo "updating network settings to activate bridge"
 apk add bridge
-cp host_config/interfaces /etc/network/interfaces
+cp host_config/denzel_interfaces /etc/network/interfaces
 service networking restart
 
 echo "updating & upgrading apk"
@@ -51,9 +51,17 @@ lxc-start --name provisioning
 echo "TRANSFERRING script files into provisioning container"
 cp -r provisioning_config /var/lib/lxc/provisioning/rootfs/root/
 
+
+# --------- LXC ATTACH DEV -------------
+lxc-attach -n sip -- /root/sip_config.sh
+lxc-attach -n sip -- /root/sipmedia_config.sh
+lxc-attach -n sip -- /root/dhcpdns_config.sh
+lxc-attach -n sip -- /root/provisioning_config.sh
+
+
 # ------------- debugging config ------------
 echo "Configuring system to fasciliate debugging..."
-./release.sh 			# make USB writeable 
+./release.sh 			# make USB writeable
 apk add git bash vim	# add git bash and vim
 
 echo "CONFIGURATION DONE"
