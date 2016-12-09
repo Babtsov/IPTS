@@ -1,0 +1,17 @@
+.gatorfone.com:10.2.0.152:ns.gatorfone.com:259200
+.gatorfone.com:10.2.0.3:sipserver1.gatorfone.com:259200
+.gatorfone.com:10.2.0.6:sipserver2.gatorfone.com:259200
+.0.2.10.in-addr.arpa:10.2.0.152:a:259200
+=gatorfone.com:10.2.0.152:86400
+=sipserver1.gatorfone.com:10.2.0.3:86400
+=sipserver2.gatorfone.com:10.2.0.6:86400
++www.gatorfone.com:10.2.0.152:86400
++gatorfone.com:10.2.0.152:86400
+#NAPTR 
+Ngatorfone.com:0:1:s:SIP+D2U::_sip._udp.gatorfone.com
+##:gatorfone.com:35:\000\000\000\000\001S\007SIP+D2U\000\027_sip._udp.gatorfone.com\000:86400
+:gatorfone.com:35:\000\024\000\170\001S\007SIP+D2T\000\027_sip._tcp.gatorfone.com\000:86400
+#SRV records
+:_sip._udp.gatorfone.com:33:\000\000\000\000\023\304\012sipserver1\011gatorfone\003com\000:
+:_sip._udp.gatorfone.com:33:\000\001\000\000\023\304\012sipserver2\011gatorfone\003com\000:
+

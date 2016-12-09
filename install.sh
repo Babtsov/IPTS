@@ -22,7 +22,6 @@ cp host_config/lxc.conf /etc/lxc/lxc.conf
 # ------------- sip config ------------------
 echo "CREATING sip container..."
 lxc-create -n sip -f /etc/lxc/lxc.conf -t alpine
-
 echo "STARTING sip container..."
 lxc-start --name sip
 echo "TRANSFERRING script files into sip container"
@@ -31,11 +30,18 @@ cp -r sip_config /var/lib/lxc/sip/rootfs/root/
 # ------------- sipmedia config -------------
 echo "CREATING sipmedia container..."
 lxc-create -n sipmedia -f /etc/lxc/lxc.conf -t alpine
-
 echo "STARTING sip media container..."
 lxc-start --name sipmedia
 echo "TRANSFERRING script files into sipmedia container"
 cp -r sipmedia_config /var/lib/lxc/sipmedia/rootfs/root/
+
+# ------------- dhcpdns config -------------
+echo "CREATING dhcpdns container..."
+lxc-create -n dhcpdns -f /etc/lxc/lxc.conf -t alpine
+echo "STARTING sip media container..."
+lxc-start --name dhcpdns
+echo "TRANSFERRING script files into sipmedia container"
+cp -r dhcpdns_config /var/lib/lxc/dhcpdns/rootfs/root/
 
 # ------------- debugging config ------------
 echo "Configuring system to fasciliate debugging..."
@@ -44,3 +50,4 @@ apk add git bash vim	# add git bash and vim
 
 echo "CONFIGURATION DONE"
 echo "Use lxc-console to configure each container individually"
+# echo "lxc-console -n sip, and then run the config script inside of it"
