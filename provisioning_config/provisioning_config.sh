@@ -14,7 +14,7 @@ apk add postgresql-dev python python-dev libpq gcc build-base zlib postgresql po
 
 # Setup postgresql
 /etc/init.d/postgresql setup
-sed "/^[# ]*log_destination/clog_destination = 'syslog'" -i /var/lib/postgresql/9.3/data/postgresql.conf
+sed "/^[# ]*log_destination/clog_destination = 'syslog'" -i /var/lib/postgresql/9.5/data/postgresql.conf
 /etc/init.d/postgresql start
 rc-update add postgresql
 wget http://initd.org/psycopg/tarballs/PSYCOPG-2-5/psycopg2-2.5.2.tar.gz
@@ -22,9 +22,9 @@ tar -xzvf psycopg2-2.5.2.tar.gz
 cd psycopg2-2.5.2
 python setup.py install
 echo 'MODIFY pg_hba.conf'
-cp /root/provisioning_config/pg_hba.conf /var/lib/postgresql/9.2/data/pg_hba.conf
+cp /root/provisioning_config/pg_hba.conf /var/lib/postgresql/9.5/data/pg_hba.conf
 echo 'MODIFY postgresql.conf'
-cp /root/provisioning_config/postgresql.conf /var/lib/postgresql/9.2/data/postgresql.conf
+cp /root/provisioning_config/postgresql.conf /var/lib/postgresql/9.5/data/postgresql.conf
 
 lbu include /usr/lib/python2.7/
 /etc/init.d/postgresql restart
