@@ -19,6 +19,7 @@ apk add lxc lxc-templates
 echo "CREATING lxc configuration..."
 cp host_config/lxc.conf /etc/lxc/lxc.conf
 
+# ------------- sip config ------------------
 echo "CREATING sip container..."
 lxc-create -n sip -f /etc/lxc/lxc.conf -t alpine
 
@@ -27,25 +28,19 @@ lxc-start --name sip
 echo "TRANSFERRING script files into sip container"
 cp -r sip_config /var/lib/lxc/sip/rootfs/root/
 
+# ------------- sipmedia config -------------
+echo "CREATING sipmedia container..."
+lxc-create -n sipmedia -f /etc/lxc/lxc.conf -t alpine
 
-# lxc-create -n sipmedia -f /etc/lxc/lxc.conf -t alpine
-# echo "Sip Media Container Created"
+echo "STARTING sip media container..."
+lxc-start --name sipmedia
+echo "TRANSFERRING script files into sipmedia container"
+cp -r sipmedia_config /var/lib/lxc/sipmedia/rootfs/root/
 
-# echo "Starting sip media container..."
-# lxc-start --name sipmedia
-# echo "configuring networking inside sipmedia"
-# cp -r sip_config /var/lib/lxc/sipmedia/rootfs/tmp/
-# lxc-attach -n sipmedia  -- /tmp/sip_config/sipmedia_config.sh
-# echo "restarting networking inside sipmedia"
-# lxc-attach -e -n sipmedia -- rc-update add networking
-
-# echo "restarting containers..."
-# lxc-stop --name sip
-# lxc-stop --name sipmedia
-# lxc-start --name sip
-# lxc-start --name sipmedia
+# ------------- debugging config ------------
+echo "Configuring system to fasciliate debugging..."
+./release.sh 			# make USB writeable 
+apk add git bash vim	# add git bash and vim
 
 echo "CONFIGURATION DONE"
-echo "Configuring system to fasciliate debugging..."
-./release.sh 		# make USB writeable 
-apk add git bash vim	# add git bash and vim
+echo "Use lxc-console to configure each container individually"
