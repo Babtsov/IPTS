@@ -38,10 +38,18 @@ cp -r sipmedia_config /var/lib/lxc/sipmedia/rootfs/root/
 # ------------- dhcpdns config -------------
 echo "CREATING dhcpdns container..."
 lxc-create -n dhcpdns -f /etc/lxc/lxc.conf -t alpine
-echo "STARTING sip media container..."
+echo "STARTING dhcpdns container..."
 lxc-start --name dhcpdns
-echo "TRANSFERRING script files into sipmedia container"
+echo "TRANSFERRING script files into dhcpdns container"
 cp -r dhcpdns_config /var/lib/lxc/dhcpdns/rootfs/root/
+
+# ------------- provisioning config --------
+echo "CREATING provisioning container..."
+lxc-create -n provisioning -f /etc/lxc/lxc.conf -t alpine
+echo "STARTING provisioning container..."
+lxc-start --name provisioning
+echo "TRANSFERRING script files into provisioning container"
+cp -r provisioning_config /var/lib/lxc/provisioning/rootfs/root/
 
 # ------------- debugging config ------------
 echo "Configuring system to fasciliate debugging..."
