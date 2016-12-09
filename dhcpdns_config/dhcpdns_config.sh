@@ -15,7 +15,7 @@ setup-acf
 echo 'INSTALLING the dhcpd package'
 apk add acf-dhcp
 echo 'ADDING dhcpd.conf'
-cp /root/dhcpdns_config/dhcpd.conf /etc/dhcpd.conf
+cp /root/dhcpdns_config/dhcpd.conf /etc/dhcp/dhcpd.conf
 
 # Start DHCP service and add to runlevel default
 rc-service dhcpd start  
@@ -31,5 +31,5 @@ rc-service tinydns start
 rc-update add tinydns
 
 # Start DNScache service and add to runlevel default
-rc-service dnscache start  
+rc-service dnscache start
 rc-update add dnscache
