@@ -40,3 +40,19 @@ cp /root/sip_config/kamdbctl.base /usr/lib/kamailio/kamctl/kamdbctl.base
 echo postgres > /root/.pgpass 
 chmod 600 /root/.pgpass 
 yes|kamdbctl create openser
+
+# Start Kamailio and setup for auto start on reboot
+rc-update add kamailio 
+echo 'rc_after=postgresql' >> /etc/conf.d/kamailio
+
+# Create the directory for pid file:
+# set ownership to /var/run/kamailio
+mkdir -p /var/run/kamailio
+chown kamailio:kamailio /var/run/kamailio
+chown kamailio:kamailio /tmp
+mkdir /tmp/kamailio
+chown kamailio:kamailio /tmp/kamailio/
+
+echo 'STARTING Kamailio'
+/etc/init.d/kamailio start
+echo 'DONE configuring kamailio'
