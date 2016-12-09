@@ -1,8 +1,8 @@
 auto lo
-iface lo inet loopback 
+iface lo inet loopback
 
-auto eth0 
-iface eth0 inet static 
-address 10.2.0.152 
-netmask 255.255.255.0 
+auto eth0
+iface eth0 inet static
+address 10.2.0.152
+netmask 255.255.255.0
 gateway 10.2.0.1

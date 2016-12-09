@@ -2,7 +2,7 @@
 echo 'CONFIGURING NETWORK'
 rm /etc/network/interfaces
 touch /etc/network/interfaces
-cp /root/dhcpdns_config/sip_network_interfaces /etc/network/interfaces
+cp /root/dhcpdns_config/dhcpdns_network_interfaces /etc/network/interfaces
 service networking restart
 
 rc-update add networking
