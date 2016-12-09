@@ -21,3 +21,12 @@ wget http://initd.org/psycopg/tarballs/PSYCOPG-2-5/psycopg2-2.5.2.tar.gz
 tar -xzvf psycopg2-2.5.2.tar.gz
 cd psycopg2-2.5.2
 python setup.py install
+echo 'MODIFY pg_hba.conf'
+cp /root/provisioning_config/pg_hba.conf /var/lib/postgresql/9.2/data/pg_hba.conf
+echo 'MODIFY postgresql.conf'
+cp /root/provisioning_config/postgresql.conf /var/lib/postgresql/9.2/data/postgresql.conf
+
+lbu include /usr/lib/python2.7/
+/etc/init.d/postgresql restart
+echo nameserver 10.2.0.1 > /etc/resolv.conf
+apk add acf-provisioning
