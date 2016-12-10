@@ -1,15 +1,10 @@
-# keep pressing enter to setup a default temporary networking interface (using dhcp)
-printf "\n" | ./setup-interfaces
-# restart the networking to activate internet
-/etc/init.d/networking restart
-# configure the `apk` tool to an endpoint where it will fetch Alpine Linux packages
-echo 1 | ./setup-apkrepos > /dev/null
-
 echo "updating network settings to activate bridge"
 apk add bridge
+cp host_config/resolv.conf /etc/resolv.conf
 cp host_config/interfaces /etc/network/interfaces
 service networking restart
-
+# configure the apk tool to an endpoint where it will fetch Alpine Linux packages
+echo 1 | /media/usb/IPTS/setup-apkrepos > /dev/null
 echo "updating & upgrading apk"
 apk update && apk upgrade
 
@@ -53,7 +48,7 @@ cp -r provisioning_config /var/lib/lxc/provisioning/rootfs/root/
 
 # ------------- debugging config ------------
 echo "Configuring system to fasciliate debugging..."
-./release.sh 			# make USB writeable 
+./release.sh 		# make USB writeable 
 apk add git bash vim	# add git bash and vim
 
 echo "CONFIGURATION DONE"
