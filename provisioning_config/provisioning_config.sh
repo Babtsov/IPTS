@@ -3,13 +3,14 @@ echo 'CONFIGURING NETWORK'
 rm /etc/network/interfaces
 touch /etc/network/interfaces
 cp /root/provisioning_config/provisioning_network_interfaces /etc/network/interfaces
-service networking restart
+ifdown eth0 && ifup eth0
+apk update && apk upgrade
 
 rc-update add networking
 
 # Configure remote administration
 apk update && apk upgrade
-setup-sshd -c openssh 
+setup-sshd -c openssh
 apk add postgresql-dev python python-dev libpq gcc build-base zlib postgresql postgresql-client
 
 # Setup postgresql

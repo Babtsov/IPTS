@@ -33,7 +33,7 @@ echo "STARTING sip media container..."
 lxc-start --name sipmedia
 echo "TRANSFERRING script files into sipmedia container"
 cp -r sipmedia_config /var/lib/lxc/sipmedia/rootfs/root/
-
+lxc-attach -n sipmedia -e -- /root/sipmedia_config/sipmedia_config.sh
 # ------------- dhcpdns config -------------
 echo "CREATING dhcpdns container..."
 lxc-create -n dhcpdns -f /etc/lxc/lxc.conf -t alpine
@@ -41,7 +41,7 @@ echo "STARTING dhcpdns container..."
 lxc-start --name dhcpdns
 echo "TRANSFERRING script files into dhcpdns container"
 cp -r dhcpdns_config /var/lib/lxc/dhcpdns/rootfs/root/
-
+lxc-attach -n dhcpdns -e -- /root/dhcpdns_config/dhcpdns_config.sh
 # ------------- provisioning config --------
 echo "CREATING provisioning container..."
 lxc-create -n provisioning -f /etc/lxc/lxc.conf -t alpine
@@ -49,10 +49,10 @@ echo "STARTING provisioning container..."
 lxc-start --name provisioning
 echo "TRANSFERRING script files into provisioning container"
 cp -r provisioning_config /var/lib/lxc/provisioning/rootfs/root/
-
+lxc-attach -n provisioning -e -- /root/provisioning_config/provisioning_config.sh
 # ------------- debugging config ------------
 echo "Configuring system to fasciliate debugging..."
-./release.sh 		# make USB writeable 
+./release.sh 		# make USB writeable
 apk add git bash vim	# add git bash and vim
 
 echo "CONFIGURATION DONE"
