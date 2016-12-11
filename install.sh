@@ -30,7 +30,6 @@ cp -r sip_config /var/lib/lxc/sip/rootfs/root/
 echo "CONFIGURRING sip container"
 lxc-attach -n sip -e -- /root/sip_config/sip_config.sh > ~/log/sip_config.log 2> ~/log/sip_config.error
 echo "DONE configuring sip. (see log at ~/log/sip_config.log)"
-exit 1
 # ------------- sipmedia config -------------
 echo "CREATING sipmedia container..."
 lxc-create -n sipmedia -f /etc/lxc/lxc.conf -t alpine
