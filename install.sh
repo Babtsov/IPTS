@@ -35,7 +35,7 @@ echo "DONE configuring sip. (see log at ~/log/sip_config.log)" | tee -a ~/log/ho
 echo "CREATING sipmedia container..." | tee -a ~/log/host_config.log
 lxc-create -n sipmedia -f /etc/lxc/lxc.conf -t alpine >> ~/log/host_config.log
 echo "STARTING sip media container..." | tee -a ~/log/host_config.log
-lxc-start --name sipmedia sipmedia 2>&1 | tee -a ~/log/host_config.log
+lxc-start --name sipmedia 2>&1 | tee -a ~/log/host_config.log
 echo "TRANSFERRING script files into sipmedia container" | tee -a ~/log/host_config.log
 cp -r sipmedia_config /var/lib/lxc/sipmedia/rootfs/root/
 echo "CONFIGURRING sip media container" | tee -a ~/log/host_config.log
