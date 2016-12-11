@@ -4,7 +4,7 @@ cp host_config/resolv.conf /etc/resolv.conf
 cp host_config/interfaces /etc/network/interfaces
 service networking restart
 # configure the apk tool to an endpoint where it will fetch Alpine Linux packages
-echo 2 | /media/usb/IPTS/setup-apkrepos
+echo 1 | /media/usb/IPTS/setup-apkrepos
 echo "updating & upgrading apk"
 apk update && apk upgrade
 
@@ -18,6 +18,8 @@ cp host_config/lxc.conf /etc/lxc/lxc.conf
 echo 0 > /proc/sys/kernel/grsecurity/chroot_caps
 echo 0 > /proc/sys/kernel/grsecurity/chroot_deny_chroot
 
+echo "CREATING a log directory"
+mkdir ~/log
 # ------------- sip config ------------------
 echo "CREATING sip container..."
 lxc-create -n sip -f /etc/lxc/lxc.conf -t alpine
@@ -25,7 +27,10 @@ echo "STARTING sip container..."
 lxc-start --name sip
 echo "TRANSFERRING script files into sip container"
 cp -r sip_config /var/lib/lxc/sip/rootfs/root/
-lxc-attach -n sip -e -- /root/sip_config/sip_config.sh
+echo "CONFIGURRING sip container"
+lxc-attach -n sip -e -- /root/sip_config/sip_config.sh > ~/log/sip_config.log 2> ~/log/sip_config.error
+echo "DONE configuring sip. (see log at ~/log/sip_config.log)"
+exit 1
 # ------------- sipmedia config -------------
 echo "CREATING sipmedia container..."
 lxc-create -n sipmedia -f /etc/lxc/lxc.conf -t alpine
@@ -56,5 +61,3 @@ echo "Configuring system to fasciliate debugging..."
 apk add git bash vim	# add git bash and vim
 
 echo "CONFIGURATION DONE"
-echo "Use lxc-console to configure each container individually"
-# echo "lxc-console -n sip, and then run the config script inside of it"
