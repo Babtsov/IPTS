@@ -38,7 +38,8 @@ echo "STARTING sip media container..."
 lxc-start --name sipmedia
 echo "TRANSFERRING script files into sipmedia container"
 cp -r sipmedia_config /var/lib/lxc/sipmedia/rootfs/root/
-lxc-attach -n sipmedia -e -- /root/sipmedia_config/sipmedia_config.sh
+lxc-attach -n sipmedia -e -- /root/sipmedia_config/sipmedia_config.sh > ~/log/sipmedia_config.log 2> ~/log/sipmedia_config.error
+echo "DONE configuring sipmedia. (see log at ~/log/sipmedia_config.log)"
 # ------------- dhcpdns config -------------
 echo "CREATING dhcpdns container..."
 lxc-create -n dhcpdns -f /etc/lxc/lxc.conf -t alpine
@@ -46,7 +47,8 @@ echo "STARTING dhcpdns container..."
 lxc-start --name dhcpdns
 echo "TRANSFERRING script files into dhcpdns container"
 cp -r dhcpdns_config /var/lib/lxc/dhcpdns/rootfs/root/
-lxc-attach -n dhcpdns -e -- /root/dhcpdns_config/dhcpdns_config.sh
+lxc-attach -n dhcpdns -e -- /root/dhcpdns_config/dhcpdns_config.sh > ~/log/dhcpdns_config.log 2> ~/log/dhcpdns_config.error
+echo "DONE configuring dhcpdns. (see log at ~/log/dhcpdns_config.log)"
 # ------------- provisioning config --------
 echo "CREATING provisioning container..."
 lxc-create -n provisioning -f /etc/lxc/lxc.conf -t alpine
@@ -54,7 +56,8 @@ echo "STARTING provisioning container..."
 lxc-start --name provisioning
 echo "TRANSFERRING script files into provisioning container"
 cp -r provisioning_config /var/lib/lxc/provisioning/rootfs/root/
-lxc-attach -n provisioning -e -- /root/provisioning_config/provisioning_config.sh
+lxc-attach -n provisioning -e -- /root/provisioning_config/provisioning_config.sh > ~/log/provisioning_config.log 2> ~/log/provisioning_config.error
+echo "DONE configuring provisioning. (see log at ~/log/provisioning_config.log)"
 # ------------- debugging config ------------
 echo "Configuring system to fasciliate debugging..."
 ./release.sh 		# make USB writeable
