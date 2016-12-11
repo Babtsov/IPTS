@@ -11,6 +11,7 @@ rc-update add networking
 # Configure remote administration
 apk update && apk upgrade
 setup-sshd -c openssh
+setup-acf
 apk add postgresql-dev python python-dev libpq gcc build-base zlib postgresql postgresql-client
 
 # Setup postgresql
