@@ -1,9 +1,7 @@
 #!/bin/sh
 echo 'CONFIGURING NETWORK'
-rm /etc/network/interfaces
-touch /etc/network/interfaces
 cp /root/dhcpdns_config/dhcpdns_network_interfaces /etc/network/interfaces
-ifdown eth0 && ifup eth0
+ifup eth0
 apk update && apk upgrade
 
 rc-update add networking

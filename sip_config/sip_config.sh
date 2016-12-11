@@ -1,15 +1,13 @@
 #!/bin/sh
 echo 'CONFIGURING NETWORK'
-rm /etc/network/interfaces
-touch /etc/network/interfaces
 cp /root/sip_config/sip_network_interfaces /etc/network/interfaces
-ifdown eth0 && ifup eth0
+ifup eth0
 apk update && apk upgrade
 
 echo 'CONFIGURE Kamailio Installation'
 apk add acf-postgresql
 /etc/init.d/postgresql setup
-sed "/^[# ]*log_destination/clog_destination = 'syslog'" -i /var/lib/postgresql/9.3/data/postgresql.conf
+sed "/^[# ]*log_destination/clog_destination = 'syslog'" -i /var/lib/postgresql/9.5/data/postgresql.conf
 /etc/init.d/postgresql start && rc-update add postgresql
 echo 'rc_after=pg-restore' > /etc/conf.d/kamailio
 lbu include /var/lib/postgresql/

@@ -2,7 +2,7 @@ echo "updating network settings to activate bridge"
 apk add bridge
 cp host_config/resolv.conf /etc/resolv.conf
 cp host_config/interfaces /etc/network/interfaces
-service networking restart
+/etc/init.d/networking start
 # configure the apk tool to an endpoint where it will fetch Alpine Linux packages
 echo 1 | /media/usb/IPTS/setup-apkrepos > /dev/null
 echo "updating & upgrading apk"
