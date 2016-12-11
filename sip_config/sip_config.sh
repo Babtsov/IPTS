@@ -3,8 +3,7 @@ echo 'CONFIGURING NETWORK'
 rm /etc/network/interfaces
 touch /etc/network/interfaces
 cp /root/sip_config/sip_network_interfaces /etc/network/interfaces
-service networking restart
-
+ifdown eth0 && ifup eth0
 apk update && apk upgrade
 
 echo 'CONFIGURE Kamailio Installation'

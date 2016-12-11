@@ -4,7 +4,7 @@ cp host_config/resolv.conf /etc/resolv.conf
 cp host_config/interfaces /etc/network/interfaces
 service networking restart
 # configure the apk tool to an endpoint where it will fetch Alpine Linux packages
-echo 1 | /media/usb/IPTS/setup-apkrepos > /dev/null
+echo 2 | /media/usb/IPTS/setup-apkrepos
 echo "updating & upgrading apk"
 apk update && apk upgrade
 
@@ -14,6 +14,10 @@ apk add lxc lxc-templates
 echo "CREATING lxc configuration..."
 cp host_config/lxc.conf /etc/lxc/lxc.conf
 
+# a workaround that allows us to run lxc-attach
+echo 0 > /proc/sys/kernel/grsecurity/chroot_caps
+echo 0 > /proc/sys/kernel/grsecurity/chroot_deny_chroot
+
 # ------------- sip config ------------------
 echo "CREATING sip container..."
 lxc-create -n sip -f /etc/lxc/lxc.conf -t alpine
@@ -21,7 +25,7 @@ echo "STARTING sip container..."
 lxc-start --name sip
 echo "TRANSFERRING script files into sip container"
 cp -r sip_config /var/lib/lxc/sip/rootfs/root/
-
+lxc-attach -n sip -e -- /root/sip_config/sip_config.sh
 # ------------- sipmedia config -------------
 echo "CREATING sipmedia container..."
 lxc-create -n sipmedia -f /etc/lxc/lxc.conf -t alpine
