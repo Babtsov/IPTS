@@ -4,7 +4,7 @@ cp host_config/resolv.conf /etc/resolv.conf
 cp host_config/interfaces /etc/network/interfaces
 /etc/init.d/networking start
 # configure the apk tool to an endpoint where it will fetch Alpine Linux packages
-echo 1 | /media/usb/IPTS/setup-apkrepos > /dev/null
+echo 1 | /media/usb/IPTS/host_config/setup-apkrepos > /dev/null
 echo "updating & upgrading apk"
 apk update && apk upgrade
 
@@ -13,6 +13,11 @@ apk add lxc lxc-templates
 
 echo "CREATING lxc configuration..."
 cp host_config/lxc.conf /etc/lxc/lxc.conf
+
+echo "CONFIGURING remote SSH access"
+mkdir ~/.ssh
+cat host_config/ipts.pub >> ~/.ssh/authorized_keys # append our public key to authorized keys
+chmod 600 ~/.ssh/authorized_keys && chmod 700 ~/.ssh # adjust premissions so ssh doesn't complain
 
 # a workaround that allows us to run lxc-attach
 echo 0 > /proc/sys/kernel/grsecurity/chroot_caps
