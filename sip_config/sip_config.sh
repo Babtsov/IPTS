@@ -53,3 +53,6 @@ chown kamailio:kamailio /tmp/kamailio/
 echo 'STARTING Kamailio'
 /etc/init.d/kamailio start
 echo 'DONE configuring kamailio'
+echo 'ADDING testing accounts'
+kamctl add 1234 1234
+kamctl add 9876 9876
