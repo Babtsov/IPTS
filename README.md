@@ -25,8 +25,13 @@ The first time the system is configued (after `install.sh` script is run), lxc-h
 __IMPORTANT: before opening any ports to the public internet, make sure you remove the default key stored inside `~/.ssh/authorized_keys` on lxc-host. The default key is meant to be used when the system is used within a private network ONLY. If you intend to expose the system to the public internet, generate your own key-pair and put the public key into the `~/.ssh/authorized_keys` file on lxc-host. NEVER share your private key with anyone. Doing otherwise might compromise the system.__  
 <br />
 Instructions to SSH into the system using the default key (to be used within a private network):
-* Copy the private key located in `host_config/ipts` to your `.ssh` directory (or some other convinient place).
+* Copy the private key located in `host_config/ipts` to your `~/.ssh` directory (or some other convenient place).
 * Make sure the permissions on the `ipts` files are correct. If not, try executing `chmod 600 ~/.ssh/ipts`
-* SSH into the lxc-host by using `ssh -i ~/.ssh/ipts root@10.2.0.253` or using a similar command depending on the location of your private key and the IP of the lxc-host
+* SSH into the lxc-host by using the following:
+```bash
+ssh-keygen -R 10.2.0.253 # not needed if this is your computer's first time SSHing into lxc-host
+ssh -i ~/.ssh/ipts root@10.2.0.253 # if needed, adjust the path to your private key
+``` 
+
 
 
