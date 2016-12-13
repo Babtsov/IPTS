@@ -31,11 +31,13 @@ lbu include /usr/lib/python2.7/
 /etc/init.d/postgresql restart
 echo nameserver 10.2.0.1 > /etc/resolv.conf
 setup-acf
+cp /root/provisioning_config/passwd /etc/acf/ # add an account to ACF so we can login
+echo -e "list\nlist" | passwd                 # set the default password of root to "list"
 mkdir /etc/ssl/mini_httpd
 cp /root/provisioning_config/server.pem /etc/ssl/mini_httpd/
 cp /root/provisioning_config/mini_httpd.conf /etc/mini_httpd/
 
-cd /var/www/localhost # cd into mini_httpd's old home dir
-rm -rf htdocs # remove it since we are about to symlink it to acf
+cd /var/www/localhost            # cd into mini_httpd's old home dir
+rm -rf htdocs                    # remove it since we are about to symlink it to acf
 ln -s /usr/share/acf/www/ htdocs # do the sybolink linking
 /etc/init.d/mini_httpd restart
