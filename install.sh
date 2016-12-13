@@ -29,19 +29,24 @@ echo "CREATING a log directory"
 mkdir ~/log
 touch ~/log/host_config.log # create a log for the host_config itself
 
-# ------------- sip config ------------------
-./create_container.sh sip
+create_container() {
+    local container_name=$1
+    echo "CREATING $container_name container..." | tee -a ~/log/host_config.log
+    lxc-create -n $container_name -f /etc/lxc/lxc.conf -t alpine >> ~/log/host_config.log
+    echo "STARTING $container_name container..." | tee -a ~/log/host_config.log
+    lxc-start --name $container_name 2>&1 | tee -a ~/log/host_config.log
+    echo "TRANSFERRING script files into $container_name container" | tee -a ~/log/host_config.log
+    cp -r ./${container_name}_config /var/lib/lxc/$container_name/rootfs/root/
+    echo "CONFIGURRING $container_name container" | tee -a ~/log/host_config.log
+    lxc-attach -n $container_name -e -- /root/${container_name}_config/${container_name}_config.sh > ~/log/${container_name}_config.log 2> ~/log/${container_name}_config.error
+    echo "DONE configuring $container_name. (see log at ~/log/${container_name}_config.log)" | tee -a ~/log/host_config.log
+}
 
-# ------------- sipmedia config -------------
-./create_container.sh sipmedia
+create_container sip           # container for Kamailio
+create_container sipmedia      # container for FreeSWITCH
+create_container dhcpdns       # container for dhcp and dns servers
+create_container provisioning  # container for the provisioning portal
 
-# ------------- dhcpdns config -------------
-./create_container.sh dhcpdns
-
-# ------------- provisioning config --------
-./create_container.sh provisioning
-
-# ------------- debugging config ------------
 echo "Configuring system to fasciliate debugging..."
 
 ./release.sh            # make USB writeable
