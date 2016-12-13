@@ -24,8 +24,9 @@ rc-update add dhcpd
 apk add acf-tinydns acf-dnscache
 echo 'COPYING the DNS file'
 cp /root/dhcpdns_config/dns_data /etc/tinydns/data
-
+cp /root/dhcpdns_config/resolv.conf /etc/resolv.conf
 # Start TinyDNS service and add to runlevel default
+tinydns-data /etc/tinydns/data
 rc-service tinydns start
 rc-update add tinydns
 

@@ -9,6 +9,9 @@ echo "updating & upgrading apk"
 apk update && apk upgrade
 
 echo "CONFIGURING remote SSH access"
+apk add openssh
+rc-update add sshd     # make sshd automatically start upon reboot
+/etc/init.d/sshd start
 mkdir ~/.ssh
 cat host_config/ipts.pub >> ~/.ssh/authorized_keys   # append our public key to authorized keys
 chmod 600 ~/.ssh/authorized_keys && chmod 700 ~/.ssh # adjust premissions so ssh doesn't complain
