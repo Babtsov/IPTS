@@ -28,6 +28,8 @@ apk add alpine-sdk
 echo 'COPYING the DNS file'
 cp /root/dhcpdns_config/dns_data /etc/tinydns/data
 cp /root/dhcpdns_config/resolv.conf /etc/resolv.conf
+cp /root/dhcpdns_config/tinydns_ip_config /etc/conf.d/tinydns
+
 # Start TinyDNS service and add to runlevel default
 tinydns-data /etc/tinydns/data
 rc-service tinydns start
