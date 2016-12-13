@@ -22,6 +22,9 @@ rc-update add dhcpd
 
 # install TinyDNS and DNScache packages
 apk add acf-tinydns acf-dnscache
+apk add djbdns
+apk add alpine-sdk
+
 echo 'COPYING the DNS file'
 cp /root/dhcpdns_config/dns_data /etc/tinydns/data
 cp /root/dhcpdns_config/resolv.conf /etc/resolv.conf
