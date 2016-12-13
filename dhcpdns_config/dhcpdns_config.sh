@@ -1,9 +1,7 @@
 #!/bin/sh
 echo 'CONFIGURING NETWORK'
-rm /etc/network/interfaces
-touch /etc/network/interfaces
 cp /root/dhcpdns_config/dhcpdns_network_interfaces /etc/network/interfaces
-ifdown eth0 && ifup eth0
+ifup eth0
 apk update && apk upgrade
 
 rc-update add networking
@@ -26,8 +24,9 @@ rc-update add dhcpd
 apk add acf-tinydns acf-dnscache
 echo 'COPYING the DNS file'
 cp /root/dhcpdns_config/dns_data /etc/tinydns/data
-
+cp /root/dhcpdns_config/resolv.conf /etc/resolv.conf
 # Start TinyDNS service and add to runlevel default
+tinydns-data /etc/tinydns/data
 rc-service tinydns start
 rc-update add tinydns
 

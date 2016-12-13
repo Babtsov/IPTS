@@ -30,4 +30,12 @@ cp /root/provisioning_config/postgresql.conf /var/lib/postgresql/9.5/data/postgr
 lbu include /usr/lib/python2.7/
 /etc/init.d/postgresql restart
 echo nameserver 10.2.0.1 > /etc/resolv.conf
-apk add acf-provisioning
+setup-acf
+mkdir /etc/ssl/mini_httpd
+cp /root/provisioning_config/server.pem /etc/ssl/mini_httpd/
+cp /root/provisioning_config/mini_httpd.conf /etc/mini_httpd/
+
+cd /var/www/localhost # cd into mini_httpd's old home dir
+rm -rf htdocs # remove it since we are about to symlink it to acf
+ln -s /usr/share/acf/www/ htdocs # do the sybolink linking
+/etc/init.d/mini_httpd restart

@@ -1,5 +1,5 @@
 # IPTS installation Scripts 
-This repository contains scripts that configure the IPTS system automatically.  
+This repository contains scripts that configure the IPTS system automatically. These scripts were tested on Alpine 3.4.6 (iso size: 81MB).    
 Please follow the following instructions to configure the system:
 * prepare your bootable USB and add the directory of this repository to the root of the USB (along with the Alpine Linux image).
 * Boot Alpine Linux from a USB drive (make sure to change BIOS settings or boot order, if needed) 
@@ -11,5 +11,12 @@ cd /media/usb/IPTS
 ```
 * As the script executes the setup, it will create a log file for each container that it creates. If needed, the log files can be examined in order to troubleshoot errors and to make sure all the components were configured poperly.
 
-## Notes
-These scripts were tested on Alpine 3.4.6 (iso size: 81MB)  
+## IP Addresses of the containers:
+dhcpdns container: 10.2.0.152  
+provisioning container: 10.2.0.6  
+sip container: 10.2.0.3  
+sipmedia container: 10.2.0.81  
+lxc-host container: 10.2.0.253
+
+
+

@@ -1,8 +1,6 @@
 #!/bin/sh
-rm /etc/network/interfaces
-touch /etc/network/interfaces
 cp /root/sipmedia_config/sipmedia_network_interfaces /etc/network/interfaces
-ifdown eth0 && ifup eth0
+ifup eth0
 apk update && apk upgrade
 
 #install all dependencies
