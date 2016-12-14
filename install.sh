@@ -1,5 +1,10 @@
 # echo "updating network settings to activate bridge"
 # apk add bridge # make sure we add bridge support before configuring network interfaces
+
+. ip_space.cfg
+sed -i "" -e "s/lxc_host_ip/$lxc_host_ip/g" "host_config/interfaces"
+sed -i "" -e "s/gateway_ip/$gateway_ip/g" "host_config/interfaces"
+
 # cp host_config/resolv.conf /etc/resolv.conf
 # cp host_config/interfaces /etc/network/interfaces
 # /etc/init.d/networking start
@@ -29,15 +34,12 @@
 # mkdir ~/log
 # touch ~/log/host_config.log # create a log for the host_config itself
 
-. ip_space.cfg
 
 create_container() {
     local container_name=$1
     local container_name_ip="${container_name}_ip"
     eval "local container_ip_value=\${$container_name_ip}"
-    echo $container_name_ip
-    echo $container_ip_value
-    sed -i "" "s/$container_name_ip/$container_ip_value/g" "${container_name}_config/${container_name}_network_interfaces"
+    sed -i "" -e "s/$container_name_ip/$container_ip_value/g" "${container_name}_config/${container_name}_network_interfaces"
     sed -i "" -e "s/gateway_ip/$gateway_ip/g" "${container_name}_config/${container_name}_network_interfaces"
     # sed -i -e 's/${container_name_ip}/${container_ip_value}/g' filename
     # echo "CREATING $container_name container..." | tee -a ~/log/host_config.log
