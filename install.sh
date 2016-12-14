@@ -2,8 +2,8 @@ echo "updating network settings to activate bridge"
 apk add bridge # make sure we add bridge support before configuring network interfaces
 
 . ip_space.cfg # export IP space variables from the configuration file
-sed -i "" -e "s/lxc_host_ip/$lxc_host_ip/g" "host_config/interfaces"
-sed -i "" -e "s/gateway_ip/$gateway_ip/g" "host_config/interfaces"
+sed -i -e "s/lxc_host_ip/$lxc_host_ip/g" "host_config/interfaces"
+sed -i -e "s/gateway_ip/$gateway_ip/g" "host_config/interfaces"
 
 cp host_config/resolv.conf /etc/resolv.conf
 cp host_config/interfaces /etc/network/interfaces
@@ -39,8 +39,8 @@ create_container() {
     local container_name=$1
     local container_name_ip="${container_name}_ip"
     eval "local container_ip_value=\${$container_name_ip}"
-    sed -i "" -e "s/$container_name_ip/$container_ip_value/g" "${container_name}_config/${container_name}_network_interfaces"
-    sed -i "" -e "s/gateway_ip/$gateway_ip/g" "${container_name}_config/${container_name}_network_interfaces"
+    sed -i -e "s/$container_name_ip/$container_ip_value/g" "${container_name}_config/${container_name}_network_interfaces"
+    sed -i -e "s/gateway_ip/$gateway_ip/g" "${container_name}_config/${container_name}_network_interfaces"
     echo "CREATING $container_name container..." | tee -a ~/log/host_config.log
     lxc-create -n $container_name -f /etc/lxc/lxc.conf -t alpine >> ~/log/host_config.log
     echo "STARTING $container_name container..." | tee -a ~/log/host_config.log
