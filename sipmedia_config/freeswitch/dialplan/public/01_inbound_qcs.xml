@@ -1,0 +1,25 @@
+<include>
+<extension name="qcs-inbound">
+<condition field="destination_number" expression="^(6016)$">
+<!-- <action application="bridge" data="sofia/$${domain}/1001@10.0.0.160"/>-->
+<action application="pre_answer"/>
+<action application="ring_ready" /> 
+<!-- <action application="set" data="ignore_early_media=true"/> -->
+ <action application="set" data="instant_ringback=false"/>
+<!--  <action application="set" 
+data="ringback=%(2000,4000,440.0,480.0)"/> -->
+<action application="set" data="bridge_early_media=true"/>
+<action application="sleep" data="2000"/>
+<action application="set" data="ivr_menu_terminator=*"/>
+   <action application="answer"/>
+<!-- <action application="sleep" data="2000"/> --> 
+<action application="set" data="hangup_after_bridge=true"/>
+     <action application="ivr" data="list_ivr"/>
+<action application="bridge" data="sofia/external/1005@10.2.0.3"/>
+
+<!--<action application="set" data="domain_name=$${domain}"/>
+<action application="transfer" data="3100 XML default"/>-->
+</condition>
+</extension>
+</include>
+

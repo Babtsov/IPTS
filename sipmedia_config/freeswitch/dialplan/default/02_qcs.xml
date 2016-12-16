@@ -1,0 +1,9 @@
+<include>
+  <extension name="Dial Out QCS Gateway">
+    <condition field="destination_number" expression="^(1\d{10})$">
+     <action application="bridge"  data="sofia/gateway/USA/$1"/>
+    </condition>
+  </extension>
+</include>
+
+

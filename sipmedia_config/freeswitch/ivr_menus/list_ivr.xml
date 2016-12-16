@@ -1,0 +1,37 @@
+<include>
+    <menu name="list_ivr"
+ tts-voice="slt"
+tts-engine="flite"
+greet-long="/usr/sounds/ivr/8664872.mp3"
+          invalid-sound="ivr/ivr-that_was_an_invalid_entry.wav"
+      exit-sound="voicemail/vm-goodbye.wav"
+      timeout ="15000"
+      inter-digit-timeout="2000"
+      max-failures="3"
+      digit-len="4"
+max-timeouts="2"
+      confirm-key="#">
+ <entry action="menu-exit" digits="*"/>
+<!--<entry action="menu-exec-app" digits="1" param="bridge sofia/$${domain}/888@conference.freeswitch.org"/>-->
+ <entry action="menu-exec-app" digits="/^(\d*)$/" param="set ringback=%(2000,4000,440.0,480.0)"/>
+ <entry action="menu-exec-app" digits="/^(\d*)$/" param="set instant_ringback=true"/>
+<entry action="menu-exec-app" digits="1" param="bridge sofia/external/4950@10.2.0.3"/>
+<entry action="menu-exec-app" digits="2" param="bridge sofia/external/1050@10.2.0.3"/>
+<entry action="menu-exec-app" digits="3" param="bridge sofia/external/2002@10.2.0.3"/>
+<entry action="menu-exec-app" digits="4" param="bridge sofia/external/2005@10.2.0.3"/>
+<entry action="menu-exec-app" digits="5" param="bridge sofia/external/2004@10.2.0.3"/>
+<entry action="menu-exec-app" digits="6" param="bridge sofia/external/2003@10.2.0.3"/>
+<!-- <entry digits="/^(\d\d\d\d)/" action="menu-exec-app" param="transfer $1 XML default"/>-->
+<entry digits="1828" action="menu-exec-app" param="transfer 3010 XML default"/>
+<entry action="menu-top" digits="9"/>    <!-- Repeat this menu -->
+ <entry action="menu-exec-app" digits="/^(30\d{2})$/" param="transfer $1 XML default"/>
+
+<!--    <entry  action="menu-exec-app" digits="/^(30\d{2})$/" param="bridge sofia/internal/$1@10.0.0.162" />-->
+
+    <entry  action="menu-exec-app" digits="/^(\d*)$/" param="bridge sofia/external/$1@10.2.0.3" />
+
+
+
+    </menu>
+
+</include>

@@ -1,0 +1,17 @@
+<include>
+  <gateway name="USA">
+  <param name="username" value="6016"/>
+  <param name="password" value="@Qu1pt812!"/>
+  <param name="from-domain" value="qcs10.qcslink.com"/>
+  <param name="proxy" value="qcs10.qcslink.com"/>
+  <param name="expire-seconds" value="3600"/>
+  <param name="register" value="true"/>
+  <param name="register-transport" value="udp"/>
+  <param name="retry-seconds" value="13"/>
+  <param name="ping" value="25"/>
+ </gateway>
+</include>
+
+
+
+
