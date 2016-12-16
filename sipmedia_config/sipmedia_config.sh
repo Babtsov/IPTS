@@ -18,6 +18,9 @@ cp -avr /usr/share/freeswitch/sounds /usr/
 mkdir /usr/conf
 cp /etc/freeswitch/tetris.ttml /usr/conf
 
+cp /root/sipmedia_config/acl.conf.xml /etc/freeswitch/autoload_configs/
+cp /root/sipmedia_config/default.xml /etc/freeswitch/dialplan
+cp /root/sipmedia_config/public.xml /etc/freeswitch/dialplan
 #Start FreesWITCH add it to rc-update:
 /etc/init.d/freeswitch start && rc-update add freeswitch
 

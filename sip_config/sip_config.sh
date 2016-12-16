@@ -30,7 +30,7 @@ sed '/^[# ]*DBROUSER/cDBROUSER=openserro' -i /etc/kamailio/kamctlrc
 sed '/^[# ]*DBROPW/cDBROPW=openserro' -i /etc/kamailio/kamctlrc
 sed '/^[# ]*DBROOTUSER/cDBROOTUSER="postgres" ' -i /etc/kamailio/kamctlrc
 sed '/^[# ]*OSER_FIFO/cOSER_FIFO="/tmp/kamailio/kamailio_fifo" ' -i /etc/kamailio/kamctlrc
-
+cp /root/sip_config/kamailio.cfg /etc/kamailio
 echo 'CREATE Kamailio database'
 # workaround weird alpine bug, see https://bugs.alpinelinux.org/issues/3104"
 cp /root/sip_config/kamdbctl.base /usr/lib/kamailio/kamctl/kamdbctl.base
