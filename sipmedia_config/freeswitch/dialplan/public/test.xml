@@ -1,0 +1,7 @@
+   <extension name="from_domain">
+      <condition field="network_addr" expression="^128\.227\.120\.45$" />
+      <condition field="destination_number" expression="^(.+)$">
+        <action application="transfer" data="$1 XML default"/>
+      </condition>
+    </extension>
+

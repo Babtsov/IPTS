@@ -1,0 +1,9 @@
+<include>
+  <extension name="Dial Out Custom Gateway">
+    <condition field="destination_number" expression="^9(1\d{10})$">
+     <action application="bridge"  data="sofia/gateway/USA/$1"/>
+<action application="set" data="effective_caller_id_name=5672441831"/>
+    </condition>
+  </extension>
+</include>
+

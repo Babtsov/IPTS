@@ -1,0 +1,7 @@
+
+<extension name="wavs">
+    <condition field="destination_number" expression="^9665$">
+      <action application="playback" data="/usr/sounds/music/8000/moh.wav"/>
+    </condition>
+</extension>
+

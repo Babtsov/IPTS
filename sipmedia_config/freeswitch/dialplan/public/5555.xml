@@ -1,0 +1,18 @@
+    <extension name="list_ivr">
+      <condition field="destination_number" expression="^5555$">
+<action application="set" data="proxy_media=true"/>
+        <action application="answer"/>
+<!--<action application="set" data="ivr_menu_terminator=*"/>-->
+<!--        <action application="sleep" data="2000"/>-->
+<!--<action application="set" data="hangup_after_bridge=true"/>   -->
+<!--  <action application="start_dtmf" />-->
+<!--<action application="set" data="dtmf_type=rfc2833"/>-->
+<!--<action application="set" data="exec_after_bridge_app=start_dtmf"/>-->
+<!--<action application="set" data="pass_rfc2833=true"/>-->
+<action application="transfer" data="3000"/>
+<!--     <action application="ivr" data="list_ivr"/>-->
+<!--<action application="bridge" data="sofia/external/1005@10.2.0.3"/>-->
+      </condition>
+    </extension>
+
+
